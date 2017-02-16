@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Stock Form</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+/*table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}*/
+h2{
+  color: rebeccapurple;
+}
+
+body > .custom-container {
+
+          width: 70%;
+          margin: 5em auto auto;
+        }
+</style>
+
+  <script type="text/javascript">
+  
+    $(function(){
+         var data_xyz = {{ saves|tojson }};
+         console.log(data_xyz)
+        var JSONObject = JSON.parse(data_xyz);
+        var newElements = '';
+        for(var i =0;i< JSONObject.length; i++) {
+          var stockElement = "<tr>"+
+          "<td>"+JSONObject[i].symbol+"</td>"+
+          "<td>"+JSONObject[i].ticker+"</td>"+
+          "<td>"+JSONObject[i].stockprice+"</td>"+
+          "</tr>";
+          $(stockElement).appendTo(".results");  
+          }
+        
+
+      google.charts.load('current', {'packages':['corechart','bar']});
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        // Create the data table pie chart
+        var data1 = new google.visualization.DataTable();
+        data1.addColumn('string', 'Topping');
+        data1.addColumn('number', 'Slices');
+        data1.addRows([
+          [JSONObject[0].symbol, JSONObject[0].per],
+          [JSONObject[1].symbol, JSONObject[1].per],
+          [JSONObject[2].symbol, JSONObject[2].per],
+        ]);
+        // Create the data table bar chart
+        var data2 = google.visualization.arrayToDataTable([
+          ['Stocks', JSONObject[0].symbol, JSONObject[1].symbol, JSONObject[2].symbol],
+          ['Day1', parseInt(JSONObject[0].time[0]), parseInt(JSONObject[1].time[0]), parseInt(JSONObject[2].time[0])],
+          ['Day2', parseInt(JSONObject[0].time[1]), parseInt(JSONObject[1].time[1]), parseInt(JSONObject[2].time[1])],
+          ['Day3', parseInt(JSONObject[0].time[2]), parseInt(JSONObject[1].time[2]), parseInt(JSONObject[2].time[2])],
+          ['Day4', parseInt(JSONObject[0].time[3]), parseInt(JSONObject[1].time[3]), parseInt(JSONObject[2].time[3])],
+          ['Day5', parseInt(JSONObject[0].time[4]), parseInt(JSONObject[1].time[4]), parseInt(JSONObject[2].time[4])]
+        ]);
+
+
+        // Set chart options pie chart
+        var options1 = {'title':'Portfolio Allocation',
+                        'chartArea' :{right :"10%", top:"10%"},
+                       'width':500,
+                       'height':400,
+                        'is3D': true};
+
+        // Set chart options bar chart
+        var options2 = { 'legend':'center',
+                        'title': 'Performance of Stock (past 5 days)',
+                        'subtitle': 'Closing Stock Prices',
+                        'chartArea' :{left :"10%", top :"5%"},
+                        'width':700,
+                        'height':400,
+                        'bars': 'vertical'
+                        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart1 = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart1.draw(data1, options1);
+        //var chart3 = new google.visualization.LineChart(document.getElementById('chart_div3'));
+
+        var chart2 = new google.visualization.BarChart(document.getElementById('barchart_material'));
+        chart2.draw(data2, options2);
+      }
+      });
+  </script>
+
+
+</head>
+<body>
+
+    <div class="custom-container ">
+        <h2 align="center">Portfolio Recommendation</h2><br><br>
+        <div class="col-sm-6">
+          
+          <table class="table table-bordered">
+            <thead>
+            <br><br><br><br>
+            <tr >
+              <th>Symbol</th>
+              <th>Stock/ETF</th> 
+              <th>Current Stock Price</th>
+            </tr>
+
+            </thead>
+            <tbody class="results">
+
+            </tbody>
+            
+            
+          </table>
+        </div>
+
+
+        <div id="chart_div" class="col-sm-6"></div>
+        <div id="barchart_material" class="row col-sm-5" ></div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<style>
+
+.button{  color: #fff;
+    background-color: #337ab7;
+    text-decoration: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+label {
+  display: block;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+#submission {
+  text-align: center;
+  }
+
+</style>
+    <head>
+        <title>Portfolio Suggestion Engine</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="header">
+                <nav>
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation" class="active"><a href="#">Home</a>
+                        </li>
+                        <li role="presentation"><a href="suggest">About</a>
+                        </li>
+                    </ul>
+                </nav>
+                <h2>Portfolio Suggestion</h2>
+            </div>
+       
+            <form action="{{ url_for('fetchInfo') }}" method="post">
+                <div class="jumbotron">
+                    <div class="form-group" >
+                            <label for="amount">Enter amount to Invest</label> 
+                            <input type="text" class="form-control" id="amount" name="amount" required>
+                    </div>
+
+                    <div >
+                        <h4>Select your Strategy</h4>
+
+                        <input type="checkbox" name="strategy" value="ethical" checked> Ethical Investing<br>
+                        <input type="checkbox" name="strategy" value="index" > Index Investing<br>
+                        <input type="checkbox" name="strategy" value="valuein" > Value Investing<br>
+                        <input type="checkbox" name="strategy" value="growth" > Growth Investing<br>
+                        <input type="checkbox" name="strategy" value="quality" > Quality Investing<br><br>
+                    </div>
+
+                    <div class=class="col-lg-5">
+                        <h4>Select your Risk Level</h4>
+                        <h5>How much risk are u willing to take on your investment</h5>
+                        <input type="radio" name="risk" value="low"> Low<br>
+                        <input type="radio" name="risk" value="medium"> Medium<br>
+                        <input type="radio" name="risk" value="high"> High<br><br>
+                    </div>
+
+                     <div class=class="col-lg-5">
+                        <h4>Income Stability</h4>
+                        <h5>A key aspect for continuous investment</h5>
+                        <input type="radio" name="income" value="low"> Stable<br>
+                        <input type="radio" name="income" value="medium"> Somewhat Stable<br>
+                        <input type="radio" name="income" value="medium"> Somewhat Unstable<br>
+                        <input type="radio" name="income" value="high"> Unstable<br><br>
+                    </div>
+
+                    <p id="submission"><button type="submit" class="button" value="submit">Get Suggestion</button></p>
+                </div>
+            </form>
+            <footer class="footer">
+                <p>&copy; Company 2015</p>
+            </footer>
+            
+        </div>
+    </body>
+    
+</html>

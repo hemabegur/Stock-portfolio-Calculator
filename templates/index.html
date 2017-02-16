@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Portfolio Suggestion Engine</title>
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+        body {
+          font-family: 'Nunito Sans', sans-serif;
+        }
+        .navbar-custom{
+          background-color: rebeccapurple;
+          border-color: rebeccapurple;
+        }
+        .navbar-brand {
+          color:#efefef;
+        }
+        .navbar-brand-custom {
+            color:white;
+        }
+        .gray {
+          color: gray;
+        }
+        body > .custom-container {
+
+          width: 70%;
+          margin: 5em auto auto;
+        }
+        img {
+          width: 300px;
+        }
+        .button{  color: #fff;
+            background-color: #337ab7;
+            text-decoration: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-size: 14px;
+            line-height: 1.42857143;
+        }
+        label {
+          display: block;
+          padding-left: 15px;
+          text-indent: -15px;
+        }
+        #submission {
+          text-align: center;
+          }
+
+        </style>
+    </head>
+
+    <body>
+      <nav class="navbar navbar-custom navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h3 class="navbar-brand-custom" href="#">Portfolio Suggestions</h3>
+        </div>
+
+      </div>
+    </nav>
+
+        <div class="custom-container">
+            <div class="jumbotron">
+              <h1>Get custom stock portfolio recommendations</h1>
+              <p class="lead col-sm-5 gray">
+                Answer these questions and get custom portfolio recommendations from live updated stocks rates!.
+              </p>
+              <img src="/static/stockImage.png" class="rounded float-xs-right" alt="stock pie chart">
+            </div>
+            <form action="{{ url_for('fetchInfo') }}" method="post">
+
+                    <div class="form-group row" >
+                            <h3 for="amount" class="col-xs-5 col-form-label">Enter amount to Invest</h3>
+                            <div class="col-xs-7">
+                              <div class="input-group">
+                                <div class="input-group-addon">$</div>
+                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Amount" min=5000 required>
+
+                                <div class="input-group-addon">.00</div>
+                            </div>
+                          </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <h3 class="col-form-legend col-sm-5">Select your Strategy</h3>
+                        <div class="col-sm-7">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" name="strategy" value="ethical" required> Ethical Investing<br>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" name="strategy" value="index" > Index Investing<br>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" name="strategy" value="valuein" > Value Investing<br>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" name="strategy" value="growth" > Growth Investing<br>
+                            </label>
+                          </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-form-legend col-sm-5"><h3>  Select your Risk Level</h3>
+                          <h5 class="gray">How much risk are u willing to take on your investment</h5>
+                        </div>
+                        <div class="col-sm-7">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" name="risk" value="low"> Low<br>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" name="risk" value="medium"> Medium<br>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" name="risk" value="high"> High<br><br>
+                            </label>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-form-legend col-sm-5"><h3> Income Stability</h3>
+                          <h5 class="gray">A key aspect for continuous investment</h5>
+                        </div>
+                        <div class="col-sm-7">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" name="income" value="low"> Stable<br>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" name="income" value="medium"> Somewhat Stable<br>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" name="income" value="medium"> Somewhat Unstable<br>
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                                  <input type="radio" name="income" value="high"> Unstable<br><br>
+                            </label>
+                          </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <p id="submission"><button type="submit" class="btn btn-lg btn-primary" value="submit">Get Suggestion</button></p>
+                </div>
+            </form>
+            <footer class="footer">
+                <p>&copy; CMPE 285 2016</p>
+            </footer>
+
+
+    </body>
+
+</html>
